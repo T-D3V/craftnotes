@@ -1,0 +1,12 @@
+version: "3"
+name: craftnotes_devcontainer
+services:
+  craftnotes:
+    container_name: craftnotes
+    build:
+      context: .
+      dockerfile: dockerfile
+      target: dev
+    volumes:
+      - ../:/usr/src/app
+    command: /bin/sh -c "while sleep 1000; do :; done"

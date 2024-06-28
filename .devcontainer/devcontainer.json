@@ -1,0 +1,24 @@
+{
+  "name": "craftnotes",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "craftnotes",
+  "workspaceFolder": "/usr/src/app",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "dbaeumer.vscode-eslint",
+        "ms-vscode.vscode-typescript-next",
+        "visualstudioexptteam.vscodeintellicode",
+        "christian-kohler.path-intellisense",
+        "mikestead.dotenv",
+        "ms-vscode.vscode-typescript-tslint-plugin",
+        "antfu.goto-alias",
+        "expo.vscode-expo-tools",
+        "msjsdiag.vscode-react-native",
+        "dsznajder.es7-react-js-snippets"
+      ]
+    }
+  }
+}
