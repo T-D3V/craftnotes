@@ -1,6 +1,10 @@
 import React from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
+import BackArrow from "../../components/back_arrow";
+import EditNoteTitle from "../../components/edit_note_title";
+import EditNoteText from "../../components/edit_note_text";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const image = require("../../assets/images/bg_edit.png");
 
@@ -9,13 +13,20 @@ const EditNote = () => {
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <View style={{ flex: 1 }}>
         <ImageBackground
           source={image}
           resizeMode="repeat"
           style={styles.image}
         >
-          <Text>Edit {filename}</Text>
+          <SafeAreaView style={styles.safeArea}>
+            <View style={styles.container}>
+              <BackArrow srcpath="/" />
+              <EditNoteTitle initialText="Test Text" />
+              <EditNoteText />
+              <Text style={styles.filename}>Edit {filename}</Text>
+            </View>
+          </SafeAreaView>
         </ImageBackground>
       </View>
     </>
@@ -28,12 +39,18 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  text: {
+  safeArea: {
+    flex: 1,
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  filename: {
     color: "white",
-    fontSize: 42,
-    lineHeight: 84,
-    textAlign: "center",
-    backgroundColor: "#000000c0",
+    fontSize: 16,
+    marginTop: 10,
   },
 });
 
