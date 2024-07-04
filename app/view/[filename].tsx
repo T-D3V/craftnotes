@@ -1,7 +1,7 @@
 import { Stack, Link, useLocalSearchParams } from "expo-router";
 import { Text, View } from "react-native";
 
-export default function ViewNote() {
+const ViewNote = () => {
   const { filename } = useLocalSearchParams();
   return (
     <>
@@ -19,4 +19,6 @@ export default function ViewNote() {
       </View>
     </>
   );
-}
+};
+
+export default ViewNote;

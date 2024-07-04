@@ -1,7 +1,7 @@
 import { Stack, useLocalSearchParams } from "expo-router";
 import { Text, View } from "react-native";
 
-export default function EditNote() {
+const EditNote = () => {
   const { filename } = useLocalSearchParams();
   return (
     <>
@@ -11,4 +11,6 @@ export default function EditNote() {
       </View>
     </>
   );
-}
+};
+
+export default EditNote;
