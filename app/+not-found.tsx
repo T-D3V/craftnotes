@@ -1,6 +1,6 @@
 import { Link, Stack } from "expo-router";
 import { StyleSheet, View } from "react-native";
-export default function NotFoundScreen() {
+const NotFoundScreen = () => {
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
@@ -12,4 +12,8 @@ export default function NotFoundScreen() {
       </View>
     </>
   );
-}
+};
+
+const styles = StyleSheet.create({});
+
+export default NotFoundScreen;
