@@ -1,37 +1,65 @@
 import React from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
-import { ImageBackground, StyleSheet, Text, View } from "react-native";
+import {
+  ImageBackground,
+  StyleSheet,
+  Text,
+  View,
+  TouchableWithoutFeedback,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from "react-native";
 import BackArrow from "../../components/back_arrow";
 import EditNoteTitle from "../../components/edit_note_title";
 import EditNoteText from "../../components/edit_note_text";
+import SaveNote from "../../components/save_note";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const image = require("../../assets/images/bg_edit.png");
 
 const EditNote = () => {
   const { filename } = useLocalSearchParams();
+
+  const handleSave = () => {
+    // Handle save action
+  };
+
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
-      <View style={{ flex: 1 }}>
-        <ImageBackground
-          source={image}
-          resizeMode="repeat"
-          style={styles.image}
-        >
-          <SafeAreaView style={styles.safeArea}>
-            <View style={styles.container}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={{ flex: 1 }}>
+          <ImageBackground
+            source={image}
+            resizeMode="repeat"
+            style={styles.image}
+          >
+            <SafeAreaView style={styles.safeArea}>
               <BackArrow srcpath="/" />
+              <SaveNote onPress={handleSave} />
               <EditNoteTitle initialText="Test Text" />
-              <EditNoteText />
+              <KeyboardAvoidingView
+                style={{ flex: 1, width: "100%" }}
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+              >
+                <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+                  <View style={styles.textContainer}>
+                    <EditNoteText />
+                  </View>
+                </ScrollView>
+              </KeyboardAvoidingView>
               <Text style={styles.filename}>Edit {filename}</Text>
-            </View>
-          </SafeAreaView>
-        </ImageBackground>
-      </View>
+            </SafeAreaView>
+          </ImageBackground>
+        </View>
+      </TouchableWithoutFeedback>
     </>
   );
 };
+
+//BackArrow Src Path mit Timo und Praveen noch anschauen
 
 const styles = StyleSheet.create({
   image: {
@@ -41,11 +69,15 @@ const styles = StyleSheet.create({
   },
   safeArea: {
     flex: 1,
-  },
-  container: {
-    flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
+    paddingHorizontal: 20,
+    paddingTop: 80,
+  },
+  textContainer: {
+    flex: 1,
+    width: "100%",
+    marginTop: 20,
   },
   filename: {
     color: "white",

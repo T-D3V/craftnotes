@@ -1,12 +1,21 @@
-import React, { useState } from "react";
-import { TextInput, StyleSheet, View } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  TextInput,
+  StyleSheet,
+  View,
+  ScrollView,
+  ImageBackground,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
-import { useEffect } from "react";
 
 interface EditNoteTextInputProps {
   initialText?: string;
 }
+
+const bookBackground = require("../assets/images/bg_book.png");
 
 const EditNoteText: React.FC<EditNoteTextInputProps> = ({
   initialText = "",
@@ -31,26 +40,48 @@ const EditNoteText: React.FC<EditNoteTextInputProps> = ({
   }
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        value={text}
-        onChangeText={setText}
-        multiline
-        placeholder="Enter your notes here..."
-        placeholderTextColor="#888"
-      />
-    </View>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
+    >
+      <ImageBackground source={bookBackground} style={styles.backgroundImage}>
+        <ScrollView
+          contentContainerStyle={styles.scrollContainer}
+          showsVerticalScrollIndicator={false}
+        >
+          <TextInput
+            style={styles.input}
+            value={text}
+            onChangeText={setText}
+            multiline
+            placeholder="Enter your notes here..."
+            placeholderTextColor="#888"
+            autoFocus
+            textAlignVertical="top"
+          />
+        </ScrollView>
+      </ImageBackground>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 10,
     backgroundColor: "#1E1E1E",
-    borderRadius: 10,
-    borderWidth: 5,
-    borderColor: "#3C3C3C",
+  },
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: "flex-start",
+    paddingVertical: 20,
   },
   input: {
     fontFamily: "mc-bold",
@@ -59,11 +90,10 @@ const styles = StyleSheet.create({
     textShadowColor: "#000000",
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 1,
-    backgroundColor: "#2E2E2E",
+    backgroundColor: "transparent",
     padding: 10,
     borderRadius: 5,
-    height: 200, // Adjust height as needed for longer texts
-    textAlignVertical: "top", // Ensure text starts at the top for multiline inputs
+    minHeight: 200,
   },
 });
 

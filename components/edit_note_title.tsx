@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextInput, StyleSheet, View } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
-import { useEffect } from "react";
 
 interface EditNoteTitleProps {
   initialText?: string;
@@ -35,6 +34,8 @@ const EditNoteTitle: React.FC<EditNoteTitleProps> = ({ initialText = "" }) => {
         value={text}
         onChangeText={setText}
         multiline
+        placeholder="Title"
+        placeholderTextColor="#888"
       />
     </View>
   );
@@ -42,12 +43,12 @@ const EditNoteTitle: React.FC<EditNoteTitleProps> = ({ initialText = "" }) => {
 
 const styles = StyleSheet.create({
   container: {
+    width: "100%",
     padding: 10,
     backgroundColor: "#1E1E1E",
     borderRadius: 10,
     borderWidth: 5,
     borderColor: "#3C3C3C",
-    alignItems: "center",
   },
   title: {
     fontFamily: "mc-bold",
