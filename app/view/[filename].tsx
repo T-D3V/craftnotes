@@ -5,8 +5,10 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import BackArrow from "../../components/back_arrow";
 
 const ViewNote = () => {
   const { filename } = useLocalSearchParams();
@@ -19,15 +21,21 @@ const ViewNote = () => {
           style={{ width: "100%", height: "100%" }}
           imageStyle={{ resizeMode: "repeat" }}
         >
-          <Text>View {filename}</Text>
-          <Link
-            href={{
-              pathname: "/edit/[filename]",
-              params: { filename: filename },
-            }}
-          >
-            Edit
-          </Link>
+          <SafeAreaView style={styles.safeArea}>
+            <BackArrow srcpath="/" />
+            <Link
+              href={{
+                pathname: "/edit/[filename]",
+                params: { filename: filename },
+              }}
+            >
+              <Image
+                source={require("../../assets/images/edit_icon.png")}
+                style={styles.editIcon}
+              />
+            </Link>
+            <Text style={styles.filename}>View {filename}</Text>
+          </SafeAreaView>
         </ImageBackground>
       </View>
     </>
@@ -44,10 +52,21 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
   },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 2,
-    padding: 10,
+  safeArea: {
+    flex: 1,
+    justifyContent: "flex-start",
+    alignItems: "center",
+    paddingHorizontal: 20,
+    paddingTop: 80,
+  },
+  editIcon: {
+    width: 30,
+    height: 30,
+    margin: 20,
+  },
+  filename: {
+    color: "white",
+    fontSize: 16,
+    marginTop: 10,
   },
 });
