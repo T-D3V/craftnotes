@@ -6,13 +6,22 @@ import {
   Text,
   View,
   Image,
+  ImageBackgroundBase,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BackArrow from "../../components/back_arrow";
 import ViewTitle from "../../components/view_note_title";
+import { useEffect, useState } from "react";
+import { getSingleNote } from "@/services/fs";
 
 const ViewNote = () => {
   const { filename } = useLocalSearchParams();
+  const [note, setNote] = useState({ filename: "", title: "", content: "" });
+
+  useEffect(() => {
+    getSingleNote(filename).then((data: Note) => setNote(data));
+  });
+
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
@@ -23,20 +32,31 @@ const ViewNote = () => {
           imageStyle={{ resizeMode: "repeat" }}
         >
           <SafeAreaView style={styles.safeArea}>
-            <BackArrow srcpath="/" />
-            <Link
-              href={{
-                pathname: "/edit/[filename]",
-                params: { filename: filename },
+            <View
+              style={{
+                flexDirection: "row",
+                width: Dimensions.get("window").width,
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: 20,
               }}
             >
-              <Image
-                source={require("../../assets/images/edit_icon.png")}
-                style={styles.editIcon}
-              />
-            </Link>
-            <ViewTitle text="test" />
-            <Text style={styles.filename}>View {filename}</Text>
+              <BackArrow srcpath="/" />
+              <Text style={styles.filename}>View {note.title}</Text>
+              <Link
+                href={{
+                  pathname: "/edit/[filename]",
+                  params: { filename: note.filename },
+                }}
+              >
+                <Image
+                  source={require("../../assets/images/edit_icon.png")}
+                  resizeMode="contain"
+                  style={styles.editIcon}
+                />
+              </Link>
+            </View>
+            <ViewTitle text={note.content} />
           </SafeAreaView>
         </ImageBackground>
       </View>
@@ -47,24 +67,15 @@ const ViewNote = () => {
 export default ViewNote;
 
 const styles = StyleSheet.create({
-  bgImage: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: 50,
-    height: 50,
-  },
   safeArea: {
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
     paddingHorizontal: 20,
-    paddingTop: 80,
   },
   editIcon: {
-    width: 30,
-    height: 30,
-    margin: 20,
+    width: 60,
+    height: 60,
   },
   filename: {
     color: "white",

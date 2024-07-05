@@ -1,4 +1,4 @@
-import { Text, StyleSheet, View } from "react-native";
+import { Text, StyleSheet, View, Dimensions, ScrollView } from "react-native";
 
 type TitleProps = {
   text: string;
@@ -6,9 +6,9 @@ type TitleProps = {
 
 const ViewTitle = ({ text }: TitleProps) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{text}</Text>
-    </View>
+    <ScrollView style={styles.container}>
+      <Text style={styles.text}>{text}</Text>
+    </ScrollView>
   );
 };
 
@@ -19,11 +19,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 5,
     borderColor: "#3C3C3C",
-    alignItems: "center",
+    flex: 1,
+    width: Dimensions.get("window").width - 60,
+    marginTop: 0,
+    margin: 30,
   },
-  title: {
+  text: {
     fontFamily: "mc-regular",
-    fontSize: 24,
+    fontSize: 16,
     color: "#FFFFFF",
     textShadowColor: "#000000",
     textShadowOffset: { width: 2, height: 2 },

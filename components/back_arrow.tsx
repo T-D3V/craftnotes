@@ -20,8 +20,8 @@ const BackArrow: React.FC<BackArrowProps> = ({ srcpath }) => {
 
 const styles = StyleSheet.create({
   arrow: {
-    width: 30,
-    height: 30,
+    width: 60,
+    height: 60,
     resizeMode: "contain",
   },
 });
