@@ -32,7 +32,8 @@ const EditNoteText: React.FC<EditNoteTextInputProps> = ({
         <ImageBackground
           source={bookBackground}
           resizeMode="cover"
-          style={styles.backgroundImage}
+          style={styles.bookBackground}
+          imageStyle={styles.imageStyle}
         >
           <TextInput
             style={styles.input}
@@ -56,11 +57,17 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#1E1E1E",
   },
-  backgroundImage: {
+  bookBackground: {
     flex: 1,
+    justifyContent: "center",
+    borderRadius: 10,
+    overflow: "hidden",
+    padding: 10,
     width: "100%",
     height: "100%",
-    resizeMode: "cover",
+  },
+  imageStyle: {
+    resizeMode: "stretch",
   },
   scrollContainer: {
     flexGrow: 1,

@@ -4,7 +4,7 @@ import { TouchableOpacity, Image, StyleSheet } from "react-native";
 const image = require("../assets/images/save_icon.png");
 
 interface SaveNoteProps {
-  onPress: () => void;
+  onPress: () => Promise<void>;
 }
 
 const SaveNote: React.FC<SaveNoteProps> = ({ onPress }) => {
