@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BackArrow from "../../components/back_arrow";
+import ViewTitle from "../../components/view_note_title";
 
 const ViewNote = () => {
   const { filename } = useLocalSearchParams();
@@ -34,6 +35,7 @@ const ViewNote = () => {
                 style={styles.editIcon}
               />
             </Link>
+            <ViewTitle text="test" />
             <Text style={styles.filename}>View {filename}</Text>
           </SafeAreaView>
         </ImageBackground>
