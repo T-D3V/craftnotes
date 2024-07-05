@@ -23,7 +23,7 @@ const Home = () => {
         >
           <NotesView />
         </ImageBackground>
-        <Link href="/edit/new" style={styles.bottomBar}>
+        <Link href={{ pathname: "create" }} style={styles.bottomBar}>
           <Text style={styles.link}>Create Note</Text>
         </Link>
       </SafeAreaView>

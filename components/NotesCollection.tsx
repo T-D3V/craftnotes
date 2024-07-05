@@ -3,6 +3,7 @@ import {
   Dimensions,
   ImageBackground,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableHighlight,
@@ -15,14 +16,18 @@ type props = {
 const NotesCollection = ({ notes }: props) => {
   const image = require("@/assets/images/sign.png");
   return (
-    <View style={styles.notesContainer}>
+    <ScrollView
+      style={styles.scrollView}
+      contentContainerStyle={styles.notesContainer}
+    >
       {notes.map((note: Note) => {
         return (
           <Pressable
             onPress={() => router.navigate(`/view/${note.filename}`)}
             style={styles.pressable}
+            key={note.title}
           >
-            <View key={note.title} style={styles.note}>
+            <View style={styles.note}>
               <ImageBackground
                 source={image}
                 resizeMode="cover"
@@ -35,27 +40,23 @@ const NotesCollection = ({ notes }: props) => {
           </Pressable>
         );
       })}
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  notesContainer: {
+  scrollView: {
     flex: 1,
-    flexBasis: "45%",
-    flexGrow: 0,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    width: Dimensions.get("window").width,
+  },
+  notesContainer: {
     width: Dimensions.get("window").width,
     padding: 20,
-    flexWrap: "wrap",
     gap: 20,
-    overflow: "scroll",
   },
   pressable: {
     minHeight: Dimensions.get("window").height / 5,
     overflow: "hidden",
-    width: "45%",
   },
   note: {
     fontFamily: "mc-regular",
