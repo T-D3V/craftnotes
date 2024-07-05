@@ -39,7 +39,9 @@ const EditNote = () => {
             style={styles.image}
           >
             <SafeAreaView style={styles.safeArea}>
-              <BackArrow srcpath="../" />
+              <View style={styles.backButton}>
+                <BackArrow srcpath="../" />
+              </View>
               <SaveNote onPress={handleSave} />
               <EditNoteTitle initialText="Test Text" />
               <KeyboardAvoidingView
@@ -82,6 +84,11 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 16,
     marginTop: 10,
+  },
+  backButton: {
+    position: "absolute",
+    top: 60,
+    left: 20,
   },
 });
 

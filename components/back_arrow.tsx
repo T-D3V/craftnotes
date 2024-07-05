@@ -11,7 +11,7 @@ interface BackArrowProps {
 const BackArrow: React.FC<BackArrowProps> = ({ srcpath }) => {
   return (
     <Link href={srcpath} asChild>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity>
         <Image source={image} style={styles.arrow} />
       </TouchableOpacity>
     </Link>
@@ -19,14 +19,9 @@ const BackArrow: React.FC<BackArrowProps> = ({ srcpath }) => {
 };
 
 const styles = StyleSheet.create({
-  button: {
-    position: "absolute",
-    top: 60,
-    left: 20,
-  },
   arrow: {
-    width: 30,
-    height: 30,
+    width: 60,
+    height: 60,
     resizeMode: "contain",
   },
 });
