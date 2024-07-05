@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { TextInput, StyleSheet, View } from "react-native";
-import * as SplashScreen from "expo-splash-screen";
-import { useFonts } from "expo-font";
 
 interface EditNoteTitleProps {
   initialText?: string;
@@ -9,23 +7,6 @@ interface EditNoteTitleProps {
 
 const EditNoteTitle: React.FC<EditNoteTitleProps> = ({ initialText = "" }) => {
   const [text, setText] = useState(initialText);
-
-  const [loaded, error] = useFonts({
-    "mc-regular": require("../assets/fonts/mc_regular.otf"),
-    "mc-italic": require("../assets/fonts/mc_bold.otf"),
-    "mc-bold": require("../assets/fonts/mc_italic.otf"),
-    "mc-bold-italic": require("../assets/fonts/mc_bold_italic.otf"),
-  });
-
-  useEffect(() => {
-    if (loaded || error) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded, error]);
-
-  if (!loaded && !error) {
-    return null;
-  }
 
   return (
     <View style={styles.container}>

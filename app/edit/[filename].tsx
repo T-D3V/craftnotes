@@ -15,9 +15,10 @@ import BackArrow from "../../components/back_arrow";
 import EditNoteTitle from "../../components/edit_note_title";
 import EditNoteText from "../../components/edit_note_text";
 import SaveNote from "../../components/save_note";
+import EditFileName from "../../components/edit_file_name";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const image = require("../../assets/images/bg_edit.png");
+const image = require("../../assets/images/bg_book.png");
 
 const EditNote = () => {
   const { filename } = useLocalSearchParams();
@@ -30,14 +31,14 @@ const EditNote = () => {
     <>
       <Stack.Screen options={{ headerShown: false }} />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: "#000000" }}>
           <ImageBackground
             source={image}
-            resizeMode="repeat"
+            resizeMode="cover"
             style={styles.image}
           >
             <SafeAreaView style={styles.safeArea}>
-              <BackArrow srcpath="/" />
+              <BackArrow srcpath="../" />
               <SaveNote onPress={handleSave} />
               <EditNoteTitle initialText="Test Text" />
               <KeyboardAvoidingView
@@ -50,6 +51,7 @@ const EditNote = () => {
                   </View>
                 </ScrollView>
               </KeyboardAvoidingView>
+              <EditFileName initialText="Test Filename" />
               <Text style={styles.filename}>Edit {filename}</Text>
             </SafeAreaView>
           </ImageBackground>
@@ -59,13 +61,9 @@ const EditNote = () => {
   );
 };
 
-//BackArrow Src Path mit Timo und Praveen noch anschauen
-
 const styles = StyleSheet.create({
   image: {
     flex: 1,
-    width: "100%",
-    height: "100%",
   },
   safeArea: {
     flex: 1,

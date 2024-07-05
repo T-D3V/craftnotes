@@ -2,14 +2,10 @@ import React, { useState, useEffect } from "react";
 import {
   TextInput,
   StyleSheet,
-  View,
   ScrollView,
-  ImageBackground,
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import * as SplashScreen from "expo-splash-screen";
-import { useFonts } from "expo-font";
 
 interface EditNoteTextInputProps {
   initialText?: string;
@@ -22,46 +18,27 @@ const EditNoteText: React.FC<EditNoteTextInputProps> = ({
 }) => {
   const [text, setText] = useState(initialText);
 
-  const [loaded, error] = useFonts({
-    "mc-regular": require("../assets/fonts/mc_regular.otf"),
-    "mc-italic": require("../assets/fonts/mc_bold.otf"),
-    "mc-bold": require("../assets/fonts/mc_italic.otf"),
-    "mc-bold-italic": require("../assets/fonts/mc_bold_italic.otf"),
-  });
-
-  useEffect(() => {
-    if (loaded || error) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded, error]);
-
-  if (!loaded && !error) {
-    return null;
-  }
-
   return (
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
       keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
     >
-      <ImageBackground source={bookBackground} style={styles.backgroundImage}>
-        <ScrollView
-          contentContainerStyle={styles.scrollContainer}
-          showsVerticalScrollIndicator={false}
-        >
-          <TextInput
-            style={styles.input}
-            value={text}
-            onChangeText={setText}
-            multiline
-            placeholder="Enter your notes here..."
-            placeholderTextColor="#888"
-            autoFocus
-            textAlignVertical="top"
-          />
-        </ScrollView>
-      </ImageBackground>
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
+      >
+        <TextInput
+          style={styles.input}
+          value={text}
+          onChangeText={setText}
+          multiline
+          placeholder="Enter your notes here..."
+          placeholderTextColor="#888"
+          autoFocus
+          textAlignVertical="top"
+        />
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };
