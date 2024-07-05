@@ -9,21 +9,17 @@ interface SaveNoteProps {
 
 const SaveNote: React.FC<SaveNoteProps> = ({ onPress }) => {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.button}>
+    <TouchableOpacity onPress={onPress}>
       <Image source={image} style={styles.icon} />
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  button: {
-    position: "absolute",
-    top: 60,
-    right: 20,
-  },
   icon: {
     width: 30,
     height: 30,
+    padding: 15,
     resizeMode: "contain",
   },
 });

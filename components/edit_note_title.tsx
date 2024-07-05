@@ -2,31 +2,22 @@ import React, { useState, useEffect } from "react";
 import { TextInput, StyleSheet, View } from "react-native";
 
 interface EditNoteTitleProps {
-  initialText?: string;
+  title: string;
   sendDataToParent: (data: string) => void;
 }
 
-const EditNoteTitle: React.FC<EditNoteTitleProps> = ({
-  initialText = "",
-  sendDataToParent,
-}) => {
-  const [text, setText] = useState(initialText);
-
-  useEffect(() => {
-    sendDataToParent(text);
-  }, [text]);
-
-  const handleChangeText = (input: string) => {
-    const validatedInput = input.replace(/[^a-zA-Z0-9]/g, "");
-    setText(validatedInput);
+const EditNoteTitle = ({ title, sendDataToParent }: EditNoteTitleProps) => {
+  const onChangeText = (data: string) => {
+    const validatedInput = data.replace(/[^a-zA-Z0-9]/g, "");
+    sendDataToParent(validatedInput);
   };
 
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.title}
-        value={text}
-        onChangeText={handleChangeText}
+        value={title}
+        onChangeText={onChangeText}
         multiline
         placeholder="Title"
         placeholderTextColor="#888"
@@ -37,12 +28,11 @@ const EditNoteTitle: React.FC<EditNoteTitleProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    padding: 10,
-    backgroundColor: "transparent",
+    padding: 20,
+    backgroundColor: "#1E1E1E",
     borderRadius: 10,
-    borderWidth: 2,
-    borderColor: "#8B4513",
+    borderWidth: 5,
+    borderColor: "#3C3C3C",
   },
   title: {
     fontFamily: "mc-bold",

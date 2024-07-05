@@ -1,6 +1,7 @@
 import * as FileSystem from "expo-file-system";
 
 const getSingleNote = async (filename: string) => {
+  await initializeNotesFolder();
   const NoteContent: Note = {
     filename: filename,
     title: filename.split(".")[0],
@@ -14,6 +15,7 @@ const getSingleNote = async (filename: string) => {
 };
 
 const writeNote = async (note: Note) => {
+  await initializeNotesFolder();
   await FileSystem.writeAsStringAsync(
     `${FileSystem.documentDirectory}notes/${note.filename}`,
     note.content,
@@ -23,6 +25,7 @@ const writeNote = async (note: Note) => {
 };
 
 const deleteNote = async (note: Note) => {
+  await initializeNotesFolder();
   await FileSystem.deleteAsync(
     `${FileSystem.documentDirectory}notes/${note.filename}`
   );
@@ -30,6 +33,7 @@ const deleteNote = async (note: Note) => {
 };
 
 const getAllNotes = async () => {
+  await initializeNotesFolder();
   const FileList: string[] = await FileSystem.readDirectoryAsync(
     `${FileSystem.documentDirectory}notes`
   );
@@ -60,10 +64,22 @@ const initializeNotesFolder = async () => {
   console.log("initializeNotesFolder Success");
 };
 
+const initializeImagesFolder = async () => {
+  FileSystem.makeDirectoryAsync(`${FileSystem.documentDirectory}images`)
+    .then(async (_) => {
+      console.log("Folder created");
+    })
+    .catch(async (_) => {
+      console.log("Folder already exists.");
+    });
+  console.log("initializeImagesFolder Success");
+};
+
 export {
   initializeNotesFolder,
   getAllNotes,
   getSingleNote,
   writeNote,
   deleteNote,
+  initializeImagesFolder,
 };

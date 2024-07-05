@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams, router } from "expo-router";
 import {
   ImageBackground,
   StyleSheet,
@@ -18,18 +18,22 @@ import SaveNote from "../../components/save_note";
 import DeleteNote from "../../components/delete_note";
 import { writeNote, getSingleNote, deleteNote } from "@/services/fs";
 import { SafeAreaView } from "react-native-safe-area-context";
+import ImageLibrary from "@/components/img_library";
+import { pickImage } from "@/services/camera";
 
 const image = require("../../assets/images/bg_edit.png");
 
 const EditNote = () => {
   const { filename } = useLocalSearchParams();
-  const [note, setNote] = useState({ filename: "", title: "", content: "" });
   const [title, setTitle] = useState("");
   const [noteText, setNoteText] = useState("");
 
   useEffect(() => {
-    getSingleNote(filename).then((data: Note) => setNote(data));
-  });
+    getSingleNote(filename).then((data: Note) => {
+      setTitle(data.title);
+      setNoteText(data.content);
+    });
+  }, []);
 
   const handleTitleChange = (data: string) => {
     setTitle(data);
@@ -47,6 +51,7 @@ const EditNote = () => {
     };
 
     writeNote(note);
+    router.replace("/");
   };
 
   const handleDelete = async () => {
@@ -55,43 +60,56 @@ const EditNote = () => {
       title: title,
       content: noteText,
     };
-
     deleteNote(note);
+    router.replace("/");
+  };
+
+  const handleImage = async () => {
+    let image = await pickImage();
+    if (image) {
+      setNoteText(noteText + `\n![image](${image})`);
+    }
   };
 
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{ flex: 1 }}>
+        <View style={styles.container}>
           <ImageBackground
             source={image}
             resizeMode="repeat"
             style={styles.image}
+            height={Dimensions.get("window").height}
           >
             <SafeAreaView style={styles.safeArea}>
-              <View style={styles.backButton}>
-                <BackArrow srcpath="../" />
+              <View
+                style={{
+                  flexDirection: "row",
+                  width: Dimensions.get("window").width,
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: 20,
+                }}
+              >
+                <BackArrow srcpath="/" />
+                <DeleteNote onPress={handleDelete} />
+                <ImageLibrary onPress={handleImage} />
+                <SaveNote onPress={handleSave} />
               </View>
-              <SaveNote onPress={handleSave} />
-              <EditNoteTitle
-                initialText={note.title}
-                sendDataToParent={handleTitleChange}
-              />
               <KeyboardAvoidingView
-                style={{ flex: 1, width: "100%" }}
+                style={styles.kbView}
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
               >
-                <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                  <View style={styles.textContainer}>
-                    <EditNoteText
-                      initialText={note.content}
-                      sendDataToParent={handleNoteTextChange}
-                    />
-                  </View>
-                </ScrollView>
+                <EditNoteTitle
+                  title={title}
+                  sendDataToParent={handleTitleChange}
+                />
+                <EditNoteText
+                  text={noteText}
+                  sendDataToParent={handleNoteTextChange}
+                />
               </KeyboardAvoidingView>
-              <DeleteNote onPress={handleDelete} />
             </SafeAreaView>
           </ImageBackground>
         </View>
@@ -101,27 +119,23 @@ const EditNote = () => {
 };
 
 const styles = StyleSheet.create({
+  kbView: {
+    flex: 1,
+    gap: 20,
+    width: Dimensions.get("window").width - 60,
+    marginBottom: 30,
+  },
   image: {
     flex: 1,
-    height: Dimensions.get("window").height,
-    width: Dimensions.get("window").width,
   },
   safeArea: {
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
     paddingHorizontal: 20,
-    paddingTop: 80,
   },
-  textContainer: {
+  container: {
     flex: 1,
-    width: "100%",
-    marginTop: 20,
-  },
-  backButton: {
-    position: "absolute",
-    top: 60,
-    left: 20,
   },
 });
 

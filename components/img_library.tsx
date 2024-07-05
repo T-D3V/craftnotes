@@ -1,13 +1,13 @@
 import React from "react";
 import { TouchableOpacity, Image, StyleSheet } from "react-native";
 
-const image = require("../assets/images/bin_icon.png");
+const image = require("../assets/images/gallery.png");
 
-interface DeleteNoteProps {
+interface ImageLibraryProps {
   onPress: () => Promise<void>;
 }
 
-const DeleteNote: React.FC<DeleteNoteProps> = ({ onPress }) => {
+const ImageLibrary = ({ onPress }: ImageLibraryProps) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <Image source={image} style={styles.icon} />
@@ -24,4 +24,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DeleteNote;
+export default ImageLibrary;

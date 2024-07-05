@@ -6,93 +6,54 @@ import {
   KeyboardAvoidingView,
   Platform,
   ImageBackground,
+  Dimensions,
+  View,
 } from "react-native";
 
 interface EditNoteTextInputProps {
-  initialText?: string;
+  text: string;
   sendDataToParent: (data: string) => void;
 }
 
-const bookBackground = require("../assets/images/bg_book.png");
-
-const EditNoteText: React.FC<EditNoteTextInputProps> = ({
-  initialText = "",
-  sendDataToParent,
-}) => {
-  const [text, setText] = useState(initialText);
-
-  useEffect(() => {
-    sendDataToParent(text);
-  }, [text]);
+const EditNoteText = ({ text, sendDataToParent }: EditNoteTextInputProps) => {
+  const onChangeText = (data: string) => {
+    sendDataToParent(data);
+  };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
-    >
-      <ScrollView
-        contentContainerStyle={styles.scrollContainer}
-        showsVerticalScrollIndicator={false}
-      >
-        <ImageBackground
-          source={bookBackground}
-          resizeMode="cover"
-          style={styles.bookBackground}
-          imageStyle={styles.imageStyle}
-        >
-          <TextInput
-            style={styles.input}
-            value={text}
-            onChangeText={setText}
-            multiline
-            placeholder="Enter your notes here..."
-            placeholderTextColor="#888"
-            autoFocus
-            textAlignVertical="top"
-          />
-        </ImageBackground>
-      </ScrollView>
-    </KeyboardAvoidingView>
+    <View style={styles.container}>
+      <TextInput
+        style={styles.text}
+        value={text}
+        onChangeText={onChangeText}
+        multiline
+        textAlignVertical="top"
+        placeholder="Enter your notes here..."
+        placeholderTextColor="#888"
+        autoFocus
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 10,
+    padding: 20,
     backgroundColor: "#1E1E1E",
-  },
-  bookBackground: {
-    flex: 1,
-    justifyContent: "center",
     borderRadius: 10,
-    overflow: "hidden",
-    padding: 10,
-    width: "100%",
+    borderWidth: 5,
+    borderColor: "#3C3C3C",
+    flex: 1,
+  },
+  text: {
     height: "100%",
-  },
-  imageStyle: {
-    resizeMode: "stretch",
-  },
-  scrollContainer: {
-    flexGrow: 1,
-    justifyContent: "flex-start",
-    paddingVertical: 20,
-  },
-  input: {
-    fontFamily: "mc-bold",
+    width: "100%",
+    fontFamily: "mc-regular",
     fontSize: 16,
     color: "#FFFFFF",
     textShadowColor: "#000000",
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 1,
-    backgroundColor: "transparent",
-    padding: 10,
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: "#8B4513",
-    minHeight: 200,
   },
 });
 

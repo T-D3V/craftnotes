@@ -6,6 +6,7 @@ type NoteProps = {
 };
 
 const ViewContent = ({ text }: NoteProps) => {
+  let occurences = text.match(/\!\[image\]\([a-zA-Z0-9\-\:\/\.\%]*\)/gm);
   return (
     <ScrollView
       style={styles.scrollContainer}
