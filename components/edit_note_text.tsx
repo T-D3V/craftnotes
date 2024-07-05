@@ -5,6 +5,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  ImageBackground,
 } from "react-native";
 
 interface EditNoteTextInputProps {
@@ -28,16 +29,22 @@ const EditNoteText: React.FC<EditNoteTextInputProps> = ({
         contentContainerStyle={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
       >
-        <TextInput
-          style={styles.input}
-          value={text}
-          onChangeText={setText}
-          multiline
-          placeholder="Enter your notes here..."
-          placeholderTextColor="#888"
-          autoFocus
-          textAlignVertical="top"
-        />
+        <ImageBackground
+          source={bookBackground}
+          resizeMode="cover"
+          style={styles.backgroundImage}
+        >
+          <TextInput
+            style={styles.input}
+            value={text}
+            onChangeText={setText}
+            multiline
+            placeholder="Enter your notes here..."
+            placeholderTextColor="#888"
+            autoFocus
+            textAlignVertical="top"
+          />
+        </ImageBackground>
       </ScrollView>
     </KeyboardAvoidingView>
   );
