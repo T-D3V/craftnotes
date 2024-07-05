@@ -10,9 +10,10 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import BackArrow from "../../components/back_arrow";
-import ViewTitle from "../../components/view_note_title";
+import ViewContent from "../../components/view_note_content";
 import { useEffect, useState } from "react";
 import { getSingleNote } from "@/services/fs";
+import EditIcon from "@/components/edit_icon";
 
 const ViewNote = () => {
   const { filename } = useLocalSearchParams();
@@ -20,7 +21,7 @@ const ViewNote = () => {
 
   useEffect(() => {
     getSingleNote(filename).then((data: Note) => setNote(data));
-  });
+  }, []);
 
   return (
     <>
@@ -43,20 +44,14 @@ const ViewNote = () => {
             >
               <BackArrow srcpath="/" />
               <Text style={styles.filename}>View {note.title}</Text>
-              <Link
+              <EditIcon
                 href={{
                   pathname: "/edit/[filename]",
                   params: { filename: note.filename },
                 }}
-              >
-                <Image
-                  source={require("../../assets/images/edit_icon.png")}
-                  resizeMode="contain"
-                  style={styles.editIcon}
-                />
-              </Link>
+              />
             </View>
-            <ViewTitle text={note.content} />
+            <ViewContent text={note.content} />
           </SafeAreaView>
         </ImageBackground>
       </View>
@@ -73,11 +68,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
   },
-  editIcon: {
-    width: 60,
-    height: 60,
-  },
   filename: {
+    fontFamily: "mc-regular",
     color: "white",
     fontSize: 16,
     marginTop: 10,

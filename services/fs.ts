@@ -9,7 +9,7 @@ const getSingleNote = async (filename: string) => {
     ),
   };
 
-  console.log("getNotes Success");
+  console.log("getNote Success");
   return NoteContent;
 };
 
