@@ -34,7 +34,6 @@ const NotesCollection = ({ notes }: props) => {
                 style={styles.background}
               >
                 <Text style={styles.title}>{note.title}</Text>
-                <Text style={styles.text}>{note.content.substring(0, 50)}</Text>
               </ImageBackground>
             </View>
           </Pressable>
@@ -67,10 +66,9 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "mc-regular",
     fontSize: 21,
-  },
-  text: {
-    fontFamily: "mc-regular",
-    fontSize: 16,
+    textAlign: "center",
+    textAlignVertical: "center",
+    height: "100%",
   },
   background: {
     height: Dimensions.get("window").height / 5,
