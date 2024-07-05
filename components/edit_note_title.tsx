@@ -39,10 +39,10 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     padding: 10,
-    backgroundColor: "#1E1E1E",
+    backgroundColor: "transparent",
     borderRadius: 10,
-    borderWidth: 5,
-    borderColor: "#3C3C3C",
+    borderWidth: 2,
+    borderColor: "#8B4513",
   },
   title: {
     fontFamily: "mc-bold",

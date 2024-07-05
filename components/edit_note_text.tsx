@@ -89,7 +89,9 @@ const styles = StyleSheet.create({
     textShadowRadius: 1,
     backgroundColor: "transparent",
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "#8B4513",
     minHeight: 200,
   },
 });
