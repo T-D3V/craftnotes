@@ -22,6 +22,13 @@ const writeNote = async (note: Note) => {
   console.log(`Note written to system at: ${note.filename}`);
 };
 
+const deleteNote = async (note: Note) => {
+  await FileSystem.deleteAsync(
+    `${FileSystem.documentDirectory}notes/${note.filename}`
+  );
+  console.log(`Note ${note.filename} deleted`);
+};
+
 const getAllNotes = async () => {
   const FileList: string[] = await FileSystem.readDirectoryAsync(
     `${FileSystem.documentDirectory}notes`
@@ -53,4 +60,10 @@ const initializeNotesFolder = async () => {
   console.log("initializeNotesFolder Success");
 };
 
-export { initializeNotesFolder, getAllNotes, getSingleNote, writeNote };
+export {
+  initializeNotesFolder,
+  getAllNotes,
+  getSingleNote,
+  writeNote,
+  deleteNote,
+};

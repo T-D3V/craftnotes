@@ -15,7 +15,8 @@ import BackArrow from "../../components/back_arrow";
 import EditNoteTitle from "../../components/edit_note_title";
 import EditNoteText from "../../components/edit_note_text";
 import SaveNote from "../../components/save_note";
-import { writeNote, getSingleNote } from "@/services/fs";
+import DeleteNote from "../../components/delete_note";
+import { writeNote, getSingleNote, deleteNote } from "@/services/fs";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const image = require("../../assets/images/bg_edit.png");
@@ -30,22 +31,32 @@ const EditNote = () => {
     getSingleNote(filename).then((data: Note) => setNote(data));
   });
 
-  const handleTitleChange = (data) => {
+  const handleTitleChange = (data: string) => {
     setTitle(data);
   };
 
-  const handleNoteTextChange = (data) => {
+  const handleNoteTextChange = (data: string) => {
     setNoteText(data);
   };
 
   const handleSave = async () => {
-    const note = {
-      filename: { title } + ".md",
-      title: { title },
-      content: { noteText },
+    const note: Note = {
+      filename: title + ".md",
+      title: title,
+      content: noteText,
     };
 
     writeNote(note);
+  };
+
+  const handleDelete = async () => {
+    const note: Note = {
+      filename: title + ".md",
+      title: title,
+      content: noteText,
+    };
+
+    deleteNote(note);
   };
 
   return (
@@ -64,7 +75,7 @@ const EditNote = () => {
               </View>
               <SaveNote onPress={handleSave} />
               <EditNoteTitle
-                initialText="Test Text"
+                initialText={note.title}
                 sendDataToParent={handleTitleChange}
               />
               <KeyboardAvoidingView
@@ -74,12 +85,13 @@ const EditNote = () => {
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                   <View style={styles.textContainer}>
                     <EditNoteText
-                      initialText="Test Note"
+                      initialText={note.content}
                       sendDataToParent={handleNoteTextChange}
                     />
                   </View>
                 </ScrollView>
               </KeyboardAvoidingView>
+              <DeleteNote onPress={handleDelete} />
             </SafeAreaView>
           </ImageBackground>
         </View>
