@@ -1,19 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextInput, StyleSheet, View } from "react-native";
 
 interface EditNoteTitleProps {
   initialText?: string;
+  sendDataToParent: (data: string) => void;
 }
 
-const EditNoteTitle: React.FC<EditNoteTitleProps> = ({ initialText = "" }) => {
+const EditNoteTitle: React.FC<EditNoteTitleProps> = ({
+  initialText = "",
+  sendDataToParent,
+}) => {
   const [text, setText] = useState(initialText);
+
+  useEffect(() => {
+    sendDataToParent(text);
+  }, [text]);
+
+  const handleChangeText = (input: string) => {
+    const validatedInput = input.replace(/[^a-zA-Z0-9]/g, "");
+    setText(validatedInput);
+  };
 
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.title}
         value={text}
-        onChangeText={setText}
+        onChangeText={handleChangeText}
         multiline
         placeholder="Title"
         placeholderTextColor="#888"

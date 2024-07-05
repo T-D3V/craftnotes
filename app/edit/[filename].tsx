@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
 import {
   ImageBackground,
   StyleSheet,
-  Text,
   View,
   TouchableWithoutFeedback,
   Keyboard,
@@ -16,16 +15,37 @@ import BackArrow from "../../components/back_arrow";
 import EditNoteTitle from "../../components/edit_note_title";
 import EditNoteText from "../../components/edit_note_text";
 import SaveNote from "../../components/save_note";
-import EditFileName from "../../components/edit_file_name";
+import { writeNote, getSingleNote } from "@/services/fs";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const image = require("../../assets/images/bg_edit.png");
 
 const EditNote = () => {
   const { filename } = useLocalSearchParams();
+  const [note, setNote] = useState({ filename: "", title: "", content: "" });
+  const [title, setTitle] = useState("");
+  const [noteText, setNoteText] = useState("");
+
+  useEffect(() => {
+    getSingleNote(filename).then((data: Note) => setNote(data));
+  });
+
+  const handleTitleChange = (data) => {
+    setTitle(data);
+  };
+
+  const handleNoteTextChange = (data) => {
+    setNoteText(data);
+  };
 
   const handleSave = async () => {
-    // Add Saving
+    const note = {
+      filename: { title } + ".md",
+      title: { title },
+      content: { noteText },
+    };
+
+    writeNote(note);
   };
 
   return (
@@ -43,14 +63,20 @@ const EditNote = () => {
                 <BackArrow srcpath="../" />
               </View>
               <SaveNote onPress={handleSave} />
-              <EditNoteTitle initialText="Test Text" />
+              <EditNoteTitle
+                initialText="Test Text"
+                sendDataToParent={handleTitleChange}
+              />
               <KeyboardAvoidingView
                 style={{ flex: 1, width: "100%" }}
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
               >
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                   <View style={styles.textContainer}>
-                    <EditNoteText />
+                    <EditNoteText
+                      initialText="Test Note"
+                      sendDataToParent={handleNoteTextChange}
+                    />
                   </View>
                 </ScrollView>
               </KeyboardAvoidingView>
@@ -79,11 +105,6 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     marginTop: 20,
-  },
-  filename: {
-    color: "white",
-    fontSize: 16,
-    marginTop: 10,
   },
   backButton: {
     position: "absolute",

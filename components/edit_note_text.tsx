@@ -10,14 +10,20 @@ import {
 
 interface EditNoteTextInputProps {
   initialText?: string;
+  sendDataToParent: (data: string) => void;
 }
 
 const bookBackground = require("../assets/images/bg_book.png");
 
 const EditNoteText: React.FC<EditNoteTextInputProps> = ({
   initialText = "",
+  sendDataToParent,
 }) => {
   const [text, setText] = useState(initialText);
+
+  useEffect(() => {
+    sendDataToParent(text);
+  }, [text]);
 
   return (
     <KeyboardAvoidingView
